@@ -21,7 +21,7 @@ struct CelsiusTemperature {
     init()
 }
 
-// основнной способ, с помощью которого swift определяе какой init  
+// основнной способ, с помощью которого swift определяет какой init  
 // использовать - это аргументы и их имена
 let fahrenheitTemperature = CelsiusTemperature(fromFahrenheit: 212.0)
 let kelvinTemperature = CelsiusTemperature(fromKelvin: 273.15)
@@ -35,5 +35,9 @@ struct Size {
 
 // не смотря на то, что внутри структуры не было объявлено явных 
 // инициализаторов, при создании экземпляра есть возможность 
-// передать аргументы через имена
+// передать аргументы через имена (Memberwise Initializers)
 let couple = Size(width: 2, height: 2)
+
+
+// *  *  *  Initializer Delegation  *  *  * 
+
