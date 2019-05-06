@@ -46,5 +46,38 @@ let couple = Size(width: 2, height: 2)
 
 // Правила работы такого делегирования отличаются для типов данных value и class:
 // structures и enums относительно просты в этом плане - так как они не поддерживают
-// наследование, делегирование будет относиться только к их собственным инициалиизаторам, 
+// наследование и делегирование будет относиться только к их собственным инициалиизаторам, 
 // в то время как классы, наследуясь, несут дополнительную ответственность за наследуемые свойства  
+
+enum CarEngineType {
+    case petrol, disel, hybrid, electro, superEngine
+}
+
+struct Car {
+    var engineType: CarEngineType = .petrol
+}
+
+struct SuperCar {
+    var car = Car()
+
+    init() {}
+
+    init(engineType: CarEngineType) {
+        car.engineType = engineType
+    }
+
+    init(superEngineFirstType: CarEngineType, superEngineSecondType: CarEngineType) {
+        // ... do some stuff with engine types ...
+        
+        // обращение к одному из init через self.init
+        self.init(engineType: .superEngine)
+    }
+}
+
+var defaultCar = SuperCar()
+var hybridCar = SuperCar(engineType: .hybrid)
+var superCar = SuperCar(superEngineFirstType: .disel, superEngineSecondType: .electro)
+
+print(defaultCar.car) // Car(engineType: CarEngineType.petrol)
+print(hybridCar.car) // Car(engineType: CarEngineType.hybrid)
+print(superCar.car) // Car(engineType: CarEngineType.superEngine)
