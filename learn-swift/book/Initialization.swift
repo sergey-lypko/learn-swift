@@ -2,7 +2,31 @@
 // создаются корректно перед тем как они будут впервые использованы (с точки зрения их props)
 
 
+// *  *  *  Значения по-умолчанию  *  *  *
+// *  *  *  *  *  *  *  *  *  *  *  *  *  *
+
+// если свойство всегда получает одно и то же значение, следует передавать его 
+// как значение по-умолчанию при объявлении свойства, нежели через инициализатор
+// конечный результат один и тот же, однако при объявлении значения по-умолчанию, 
+// передаваемое значение связывается со свойством более тесно (с точки зрения реализации языка)
+// значения по-умолчанию так же способствуют более удобному пострению наследований 
+// и связанными манипуляциями над свойствами объектов 
+struct Car {
+    // если возникнет необходимость перееопределить значение в init, свойство
+    // должно быть изменяемым -> var
+    var wheelsAmount: Int = 4
+    var model: Model
+    
+    init(model: Model) {
+        self.model = model
+    }
+}
+
+
+
 // *  *  *  Различные инициализаторы  *  *  *
+// *  *  *  *  *  *  *  *  *  *  *  *  *  *  *
+
 struct CelsiusTemperature {
     var temperature: Double
     
@@ -14,6 +38,7 @@ struct CelsiusTemperature {
         temperature = fromKelvin - 273.15
     }
     
+    // аргументы в init, так же как и в функциях, могут иметь внешнее и внутренее имя
     init(_ celsius: Double) {
         temperature = celsius
     }
@@ -28,24 +53,30 @@ let kelvinTemperature = CelsiusTemperature(fromKelvin: 273.15)
 let baseTemperature = CelsiusTemperature(36.6)
 
 
-// *  *  *  Значения по-умолчанию  *  *  *
-// если свойство всегда получает одно и то же значение, следует передавать его 
-// как значение по-умолчанию при объявлении свойства, нежели через инициализатор
-// конечный результат один и тот же, однако при объявлении значения по-умолчанию, 
-// передаваемое значение связывается со свойством более тесно (с точки зрения реализации языка)
-// значения по-умолчанию так же способствуют более удобному пострению наследований 
-// и связанными манипуляциями над свойствами объектов 
-struct Car {
-    let wheelsAmount: Int = 4
-    var model: Model
+struct Color {
+    let red, green, blue: Double
     
-    init(model: Model) {
-        self.model = model
+    init(red: Double, green: Double, blue: Double) {
+        self.red = red
+        self.green = green
+        self.blue = blue
+    }
+    
+    init(white: Double) {
+        red = white
+        green = white
+        blue = white
     }
 }
 
+let someCoolored = Color(red: 1.0, green: 0.0, blue: 1.0)
+let whiteColored = Color(white: 0.5)
+
+
 
 // *  *  *  Struct Memberwise Initializers  *  *  * 
+// *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *
+
 struct Size {
     var width = 0.0, height = 0.0
 }
@@ -58,6 +89,8 @@ let couple = Size(width: 2, height: 2)
 
 
 // *  *  *  Initializer Delegation  *  *  * 
+// *  *  *  *  *  *  *  *  *  *  *  *  *  *
+
 // Одни инициализаторы могут вызывать другие, чтобы выполнить часть 
 // инициализации экземпляра. Этот процесс называется делегированием 
 // инициализаторов и служит для избежания дублирования когда среди инициализаторов
@@ -99,3 +132,38 @@ var superCar = SuperCar(superEngineFirstType: .disel, superEngineSecondType: .el
 print(defaultCar.car) // Car(engineType: CarEngineType.petrol)
 print(hybridCar.car) // Car(engineType: CarEngineType.hybrid)
 print(superCar.car) // Car(engineType: CarEngineType.superEngine)
+
+
+
+// *  *  *  Опциональные значения  *  *  * 
+// *  *  *  *  *  *  *  *  *  *  *  *  *  *
+
+// в ситуациях, когда свойство может быть в состоянии "без значения",
+// во время инициализации или вообще, иеется возможность сделать его опциональным
+// такие свойства автоматически получат nil значение, указывающее на то, что
+// свойства намеренным образом не должны получать значения во время инициализации
+
+class Survey {
+    var question: String
+    var response: String?
+    
+    init(question: String) {
+        self.question = question
+    }
+}
+
+let surv = Survey(question: "2 + 2?")
+
+// здесь логичная закономерность: ответ на вопрос не будет известен, пока вопрос не будет задан
+surv.response = "Probably it's 4"
+
+
+
+
+
+
+
+
+
+
+
