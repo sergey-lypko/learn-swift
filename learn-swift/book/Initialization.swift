@@ -166,7 +166,7 @@ struct SuperCar {
     init(superEngineFirstType: CarEngineType, superEngineSecondType: CarEngineType) {
         // ... do some stuff with engine types ...
         
-        // обращение к одному из init через self.init
+        // обращение к одному из init через self.init (делегирование)
         self.init(engineType: .superEngine)
     }
 }
