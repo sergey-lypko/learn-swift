@@ -205,11 +205,7 @@ print(superCar.car) // Car(engineType: CarEngineType.superEngine)
 // повышения читабельности кода засчет упрощения процесса инициализации
 
 
-
-
-
-
-
+// TODO: попрактковать все эти designated и convenience инициализаторы 
 
 
 
