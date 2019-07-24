@@ -9,10 +9,10 @@
 
 // если свойство всегда получает одно и то же значение, следует передавать его 
 // как значение по-умолчанию при объявлении свойства, нежели через инициализатор
+
 // конечный результат один и тот же, однако при объявлении значения по-умолчанию, 
 // передаваемое значение связывается со свойством более тесно (с точки зрения реализации языка)
-// значения по-умолчанию так же способствуют более удобному пострению наследований 
-// и связанными манипуляциями над свойствами объектов 
+
 struct Car {
     // если возникнет необходимость перееопределить значение в init, свойство
     // должно быть изменяемым -> var
@@ -49,7 +49,7 @@ struct CelsiusTemperature {
 }
 
 // основнной способ, с помощью которого swift определяет какой init  
-// использовать - это аргументы и их именами
+// использовать - это аргументы и их имена
 let fahrenheitTemperature = CelsiusTemperature(fromFahrenheit: 212.0)
 let kelvinTemperature = CelsiusTemperature(fromKelvin: 273.15)
 let baseTemperature = CelsiusTemperature(36.6)
@@ -81,6 +81,7 @@ let whiteColored = Color(white: 0.5)
 
 // в ситуациях, когда свойство может быть в состоянии "без значения",
 // во время инициализации или вообще, иеется возможность сделать его опциональным
+
 // такие свойства автоматически получат nil значение, указывающее на то, что
 // свойства намеренным образом не должны получать значения во время инициализации
 
@@ -222,11 +223,42 @@ print(superCar.car) // Car(engineType: CarEngineType.superEngine)
 // инициализированный экземпляр 
 
 
+// * . * . * . Two-Phase Initialization  * . * . *
+// процес инициализации классов включает в себя 2 этапа:
+// 1. каждому свойству присваивается начальное значение 
+// 2. после того, как начальное состояние для каждого свойства было установлено, 
+// вторая фаза предоставляет возможность настроить? эти свойства перед использованием экземпляра
+
+
+
+
+
+
+
+
 
 
 
 // TODO: попрактковать все эти designated и convenience инициализаторы 
 
++                                if let trade = self?.trade {
+                                     try? ExchangeTransactions.shared.add(
+-                                        tradeID: tradeID,
+-                                        transactionID: transactionID)
++                                        tradeID: trade.value.id,
++                                        transactionID: transactionID,
++                                        provider: trade.value.provider.rawValue
++                                    )
+                                 }
 
 
 
+-    func add(tradeID: String, transactionID: String) throws {
++    func add(tradeID: String, transactionID: String, provider: String) throws {
+         guard getTradeID(by: transactionID) == nil else {
+             return
+         }
+
+-        let item = JSON(["tradeID": tradeID, "txID": transactionID])
++        let item = JSON(["tradeID": tradeID, "txID": transactionID, "provider": provider])
+         let array = json.arrayValue + [item]
