@@ -223,11 +223,8 @@ print(superCar.car) // Car(engineType: CarEngineType.superEngine)
 // инициализированный экземпляр 
 
 
-// * . * . * . Two-Phase Initialization  * . * . *
-// процес инициализации классов включает в себя 2 этапа:
-// 1. каждому свойству присваивается начальное значение 
-// 2. после того, как начальное состояние для каждого свойства было установлено, 
-// вторая фаза предоставляет возможность настроить? эти свойства перед использованием экземпляра
+// * . * . * . Initializer Inheritance and Overriding  * . * . *
+
 
 
 
@@ -241,24 +238,3 @@ print(superCar.car) // Car(engineType: CarEngineType.superEngine)
 
 // TODO: попрактковать все эти designated и convenience инициализаторы 
 
-+                                if let trade = self?.trade {
-                                     try? ExchangeTransactions.shared.add(
--                                        tradeID: tradeID,
--                                        transactionID: transactionID)
-+                                        tradeID: trade.value.id,
-+                                        transactionID: transactionID,
-+                                        provider: trade.value.provider.rawValue
-+                                    )
-                                 }
-
-
-
--    func add(tradeID: String, transactionID: String) throws {
-+    func add(tradeID: String, transactionID: String, provider: String) throws {
-         guard getTradeID(by: transactionID) == nil else {
-             return
-         }
-
--        let item = JSON(["tradeID": tradeID, "txID": transactionID])
-+        let item = JSON(["tradeID": tradeID, "txID": transactionID, "provider": provider])
-         let array = json.arrayValue + [item]
