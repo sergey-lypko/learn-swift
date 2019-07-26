@@ -44,16 +44,5 @@ let manager = DataManager()
 let filename = manager.importer.filename
 
 
-// *  *  *  Observ  *  *  *
-// это разве то же самое что и obser? 
-// Хороший приемер - когда при изменении одного из полей ну
-    var paymentId: String? {
-        get {
-            return contentView.paymentIdTextField.textField.text
-        }
-        
-        set {
-            contentView.paymentIdTextField.textField.text = newValue
-        }
-    }
+
 
