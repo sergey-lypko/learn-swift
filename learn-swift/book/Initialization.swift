@@ -225,7 +225,16 @@ print(superCar.car) // Car(engineType: CarEngineType.superEngine)
 
 // * . * . * . Initializer Inheritance and Overriding  * . * . *
 
-
+// в данном примере при создании экземпляров Vehicle будет создан инициализатор по умолчанию
+// практически всегда инициализатором по умолчанию будет являться designated инициализатор 
+class Vehicle {
+    var numberOfWheels = 0
+    
+    // computed property
+    var description: String {
+        return "\(numberOfWheels) wheel(s)"
+    }
+}
 
 
 
