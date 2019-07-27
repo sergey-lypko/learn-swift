@@ -193,7 +193,7 @@ print(superCar.car) // Car(engineType: CarEngineType.superEngine)
 // два основных способа: designated (обозначенные) initializers и convenience initializers
 
 // designated инициализаторы являются главными при инициализации классов и обычно таких 
-// инициализаторов не много или один, который будет являться ключевым элементом 
+// инициализаторов немного или один, который будет являться ключевым элементом 
 // в инициализации всего класса, включая цепочку суперклассов 
 
 // каждый класс должен иметь как минимум один designated инициализатор
@@ -211,6 +211,7 @@ print(superCar.car) // Car(engineType: CarEngineType.superEngine)
 
 
 // *  *  *  Rules  *  *  *
+
 // A designated initializer must call a designated initializer from its immediate superclass.
 // A convenience initializer must call another initializer from the same class.
 // A convenience initializer must ultimately call a designated initializer.
@@ -223,7 +224,7 @@ print(superCar.car) // Car(engineType: CarEngineType.superEngine)
 // инициализированный экземпляр 
 
 
-// * . * . * . Initializer Inheritance and Overriding  * . * . *
+// *  *  *  Initializer Inheritance and Overriding  *  *  *
 
 // в данном примере при создании экземпляров Vehicle будет создан инициализатор по умолчанию,
 // который практически всегда будет являться designated инициализатор 
