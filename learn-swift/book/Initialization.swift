@@ -203,6 +203,33 @@ print(superCar.car) // Car(engineType: CarEngineType.superEngine)
 // convenience инициализаторы являются второстепенными и предоставляют возможность вызывать designated 
 // инициализаторы текущего класса с какими-либо предопределенными параметрами
 
+// они удобны в ситуациях, когда класс содержит большое кол-во различных свойств, 
+// которые не всегда нужна иинициализировать все сразу 
+
+class Movie {
+    var title: String
+    var director: String
+    var budget: Int
+
+    init(title: String, director: String, budget: Int) {
+        self.title = title
+        self.director = director
+        self.budget = budget
+    }
+
+    convenience init(title: String) {
+        self.init(title: title, director: "Unknown", budget: 0)
+    }
+    
+
+    convenience init(title: String, director: String) {
+        self.init(title: title, director: director, budget: 0)
+    }
+}
+
+let theGoodTheBadTheUgly = Movie(title: "The Good, the Bad and the Ugly")
+let theRevolver = Movie(title: "The Revoler", director: "Guy Ritchie")
+
 // convenience инициализатор может так же служить для конкретного применения класса 
 // или определенного входящего параметра/ов
 
