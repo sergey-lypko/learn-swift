@@ -225,8 +225,10 @@ print(superCar.car) // Car(engineType: CarEngineType.superEngine)
 
 // * . * . * . Initializer Inheritance and Overriding  * . * . *
 
-// в данном примере при создании экземпляров Vehicle будет создан инициализатор по умолчанию
-// практически всегда инициализатором по умолчанию будет являться designated инициализатор 
+// в данном примере при создании экземпляров Vehicle будет создан инициализатор по умолчанию,
+// который практически всегда будет являться designated инициализатор 
+
+// default designated initializer
 class Vehicle {
     var numberOfWheels = 0
     
@@ -235,6 +237,62 @@ class Vehicle {
         return "\(numberOfWheels) wheel(s)"
     }
 }
+
+// когда инициализатор сабкласса совпадает (по сигнатуре) с инициализатором родительского, 
+// такой инициализатор необходимо записывать через модификатор override
+
+// это актуально так же в ситуациях, когда родительский класс создается через 
+// инициализатор по умолчанию (как на примере выше)
+
+class Bicycle: Vehicle {
+    // сигнатура без аргументов, так же как в Vehicle default init -> override
+    override init() {
+        // super - ссылка на суперкласс
+        // super.init() делается для корректного наследования свойст суперкласса 
+        super.init()
+        numberOfWheels = 2
+    }
+}
+
+// другой пример наследования 
+// здесь инициализаторы не совпадают -> no need override keyword
+// но видна демонстрация наследования -> переопределения свойст родителя + своих
+
+class Main {
+    var a: Int = 10
+}
+
+class Secondary: Main {
+    let b: String
+
+    init (b: String) {
+        self.b = b 
+        super.init()
+        a = 12
+    }
+}
+
+// так же хороший пример с переопределнием уже свойства, а не инициализатора 
+
+class Hoverboard: Vehicle {
+    var color: String
+    init(color: String) {
+        self.color = color
+        // super.init() implicitly called here
+    }
+    override var description: String {
+        return "\(super.description) in a beautiful \(color)"
+    }
+}
+
+// модификатор override должен быть использован так же в ситуациях, когда инициализатором 
+// сабкласса выступает convenience инициализатор (в случае inits match)
+
+// если инициализатор в сабклассе совпадает с convenience инициализатором, 
+// override не указывается, так как это противоречит правилам написания инициализаторов в swift
+
+
+
 
 
 
