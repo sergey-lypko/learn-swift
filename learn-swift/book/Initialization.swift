@@ -196,6 +196,7 @@ print(superCar.car) // Car(engineType: CarEngineType.superEngine)
 // failable inits или записывать обработчики throws прямо в инициализаторах
 
 // failable inits возвращают optional значение, а так же могут возвращать nil
+// но лучше всего они подходят как раз для nil cases
 
 struct FuelTank {
     var currentAmount: Int
@@ -214,6 +215,50 @@ struct FuelTank {
 if let fuelTank = FuelTank(currentAmount: -100, currentLiquidType: "Nitro") {
     print("Current amount > 0")
 }
+
+
+// *  *  *  Throwing  *  *  *
+
+// для обработки более сложных, "серьезных" ошибок более подходящим вариантом 
+// будет являться соответствующий обработчик внутри init
+
+struct Astronaut {
+    let name: String
+    let age: Int
+
+    init(name: String, age: Int) {
+        self.name = name
+        self.age = age
+    }
+}
+
+// name должен быть не пустой строкой и возраст должен быть в диапазоне от 18 до 70
+// enum для потенциальных ошибок:
+
+enum InvalidAstronautDataError: Error {
+    case EmptyName
+    case InvalidAge
+}
+
+init(name: String, age: Int) throws {
+    if name.isEmpty {
+        throw InvalidAstronautDataError.EmptyName
+    }
+    
+    if age < 18 || age > 70 {
+        throw InvalidAstronautDataError.InvalidAge
+    }
+    
+    self.name = name
+    self.age = age
+}
+
+let johnny = try? Astronaut(name: "Johnny Cosmoseed", age: 42)
+let johnnyYoung = try? Astronaut(name: "Johnny Cosmoseed", age: 17) // nil
+
+// резюмируя, более предпочтительным является второй способ
+// failable inits проще во всех смыслах и присутствуют в языке от части потому,
+// что в первых версиях swift не было throwing inits
 
 
 
