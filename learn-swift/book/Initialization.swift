@@ -141,7 +141,7 @@ let couple = Size(width: 2, height: 2)
 
 
 // *  *  *  Initializer Delegation (value type > struct/enum)  *  *  * 
-// *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *
+// *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *
 
 // одни инициализаторы могут вызывать другие, чтобы выполнить часть 
 // инициализации экземпляра 
@@ -186,6 +186,34 @@ var superCar = SuperCar(superEngineFirstType: .disel, superEngineSecondType: .el
 print(defaultCar.car) // Car(engineType: CarEngineType.petrol)
 print(hybridCar.car) // Car(engineType: CarEngineType.hybrid)
 print(superCar.car) // Car(engineType: CarEngineType.superEngine)
+
+
+
+// *  *  *  Failable initializers for structs  *  *  *
+// *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  * 
+
+// существует два сопоба обработать ошибки во время инициализации: использовать
+// failable inits или записывать обработчики throws прямо в инициализаторах
+
+// failable inits возвращают optional значение, а так же могут возвращать nil
+
+struct FuelTank {
+    var currentAmount: Int
+    var currentLiquidType: String?
+
+    init?(currentAmount: Int, currentLiquidType: String?) {
+        if currentAmount < 0 {
+            return nil
+        }
+
+        self.currentAmount = currentAmount
+        self.currentLiquidType = currentLiquidType
+    }   
+}
+
+if let fuelTank = FuelTank(currentAmount: -100, currentLiquidType: "Nitro") {
+    print("Current amount > 0")
+}
 
 
 
