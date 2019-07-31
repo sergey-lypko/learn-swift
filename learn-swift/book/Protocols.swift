@@ -32,4 +32,4 @@ var ncc1701 = Starship(name: "Enterprise", prefix: "USS")
 // *  *  *  *  *  *  *  *  *  *  *  *  *  *
 
 // no defaul values
-// always with static keywoard
+
