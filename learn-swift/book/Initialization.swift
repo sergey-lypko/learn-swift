@@ -265,6 +265,9 @@ let johnnyYoung = try? Astronaut(name: "Johnny Cosmoseed", age: 17) // nil
 // *  *  *  Class Inheritance and Initialization  *  *  * 
 // *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *  *
 
+// TODO: разобраться в Two-Phase Initialization
+// TODO: лучше разобраться в связях при наследовании между designated & convenience
+
 // чтобы убедиться, что все свойства класса получат значения во время инициализации, в языке существует
 // два основных способа: designated (обозначенные) initializers и convenience initializers
 
@@ -396,16 +399,32 @@ class Hoverboard: Vehicle {
 // override не указывается, так как это противоречит правилам написания инициализаторов в swift
 
 
+// *  *  *  Designated and Convenience Initializers in Action  *  *  *
+
+class Food {
+    var name: String
+    init(name: String) {
+        self.name = name
+    }
+    convenience init() {
+        self.init(name: "[Unnamed]")
+    }
+}
+
+class RecipeIngredient: Food {
+    var quantity: Int
+    init(name: String, quantity: Int) {
+        self.quantity = quantity
+        super.init(name: name)
+    }
+    
+    // здесь convenience инициализатор переопределяет (совпадает по сигнатуре с designated
+    // инициализатором родительского класса) -> override
+    override convenience init(name: String) {
+        self.init(name: name, quantity: 1)
+    }
+}
 
 
 
-
-
-
-
-
-
-
-
-// TODO: попрактковать все эти designated и convenience инициализаторы 
-
+// TODO: больше практики по различным сценариям
